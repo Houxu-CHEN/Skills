@@ -1,4 +1,4 @@
 interface:
   display_name: "购买记录 PDF"
-  short_description: "从本地订单图与发票生成购买记录 PDF 汇总"
-  default_prompt: "使用 $purchase-record-pdf 把本地订单截图、付款截图和发票文件配对整理成一份 LaTeX/PDF 购买记录汇总。"
+  short_description: "从本地订单图与发票生成带内置模板的购买记录 PDF"
+  default_prompt: "使用 $purchase-record-pdf 基于内置 LaTeX 模板，把本地订单截图、付款截图和发票文件配对整理成一份购买记录 PDF 汇总。"

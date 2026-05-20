@@ -1,0 +1,180 @@
+\documentclass[11pt,fontset=fandol]{ctexart}
+
+\usepackage[a4paper,margin=1.15cm]{geometry}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{tabularx}
+\usepackage{xcolor}
+
+\setlength{\parindent}{0pt}
+\renewcommand{\arraystretch}{1.18}
+\pagestyle{empty}
+
+% 购买记录 PDF 通用模版
+% 用法：
+% 1. 修改标题、日期。
+% 2. 在首页汇总表中填入各类型条目、小计与总计。
+% 3. 每个物品复制一段 \recordpage。
+% 4. 有完整发票时用 \invoiceimage；缺票或未匹配时用 \invoiceplaceholder。
+% 5. 最后一页 TODO 按实际缺口填写。
+% 6. 这份模版默认可直接编译；示例页全部使用占位框，实际使用时再替换成真实图片路径。
+
+\newcommand{\docTitle}{购买记录汇总}
+\newcommand{\docDate}{2026年05月20日}
+
+\newcommand{\typeRow}[4]{#1 & #2 & #3 & #4 \\}
+\newcommand{\subtotalRow}[2]{\multicolumn{2}{l}{#1小计} & #2 & \\}
+
+\newcommand{\topimage}[2]{
+  \begin{minipage}[t][8.1cm][t]{0.485\linewidth}
+    \centering
+    \textbf{#1}\\[0.3em]
+    \includegraphics[width=\linewidth,height=7.5cm,keepaspectratio]{#2}
+  \end{minipage}
+}
+
+\newcommand{\topplaceholder}[2]{
+  \begin{minipage}[t][8.1cm][t]{0.485\linewidth}
+    \centering
+    \textbf{#1}\\[0.3em]
+    \fcolorbox{black}{gray!8}{
+      \parbox[c][7.2cm][c]{0.92\linewidth}{
+        \centering
+        #2
+      }
+    }
+  \end{minipage}
+}
+
+\newcommand{\invoiceimage}[2]{
+  \begin{minipage}[t][14.6cm][t]{\linewidth}
+    \centering
+    \textbf{发票}\\[0.3em]
+    \includegraphics[width=\linewidth,height=13.8cm,keepaspectratio,#1]{#2}
+  \end{minipage}
+}
+
+\newcommand{\invoiceplaceholder}[1]{
+  \fcolorbox{black}{gray!8}{
+    \parbox[c][13.0cm][c]{0.96\linewidth}{
+      \centering
+      发票待补\\[0.6em]
+      #1\\[0.4em]
+      正式报销前需继续核对\\
+      订单金额 = 支付金额 = 发票金额
+    }
+  }
+}
+
+\newcommand{\recordpage}[7]{
+\clearpage
+{\Large \textbf{#1}}\\[0.3em]
+类型：#2 \qquad 金额：#3\\[0.7em]
+\noindent
+\topimage{购买记录}{#4}\hfill
+\topimage{付款记录}{#5}
+
+\vspace{0.7em}
+
+\noindent
+#6
+
+\vfill
+\textcolor{gray}{#7}
+}
+
+\newcommand{\recordpagecustom}[7]{
+\clearpage
+{\Large \textbf{#1}}\\[0.3em]
+类型：#2 \qquad 金额：#3\\[0.7em]
+\noindent
+#4\hfill#5
+
+\vspace{0.7em}
+
+\noindent
+#6
+
+\vfill
+\textcolor{gray}{#7}
+}
+
+\begin{document}
+
+\begin{center}
+  {\zihao{2}\bfseries \docTitle}\\[0.35em]
+  {\large \docDate}
+\end{center}
+
+\vspace{0.25em}
+
+{\small
+\begin{center}
+\begin{tabularx}{0.99\linewidth}{@{}>{\raggedright\arraybackslash}p{1.8cm} X >{\centering\arraybackslash}p{2.1cm} >{\centering\arraybackslash}p{1.8cm}@{}}
+\toprule
+类型 & 物品名 & 价格 & 备注 \\
+\midrule
+\typeRow{服装}{示例物品 A}{88.00}{}
+\typeRow{服装}{示例物品 B}{128.00}{}
+\subtotalRow{服装}{216.00}
+\midrule
+\typeRow{道具}{示例物品 C}{56.00}{}
+\subtotalRow{道具}{56.00}
+\midrule
+\typeRow{家具}{暂无}{0.00}{}
+\subtotalRow{家具}{0.00}
+\midrule
+\multicolumn{2}{l}{总计} & 272.00 & \\
+\bottomrule
+\end{tabularx}
+\end{center}
+}
+
+\vspace{0.5em}
+
+\textbf{说明：}本版按“左上购买记录、右上付款记录、下方发票”的固定构图生成。首页为分类汇总表；后续每个物品单开一页；最后一页列出缺失或未匹配材料。
+
+\recordpagecustom
+{1. 示例物品 A}
+{服装}
+{¥88.00}
+\topplaceholder{购买记录}{把这里替换成 \texttt{\string\topimage\{购买记录\}\{./path/to/order.png\}}}
+\topplaceholder{付款记录}{把这里替换成 \texttt{\string\topimage\{付款记录\}\{./path/to/payment.png\}}}
+{\invoiceplaceholder{当前未见对应完整发票。}}
+{订单号：示例订单号；备注：可替换为商家或核对说明。}
+
+\recordpagecustom
+{2. 示例物品 B}
+{服装}
+{¥128.00}
+\topplaceholder{购买记录}{把这里替换成 \texttt{\string\topimage\{购买记录\}\{./path/to/order.png\}}}
+\topplaceholder{付款记录}{把这里替换成 \texttt{\string\topimage\{付款记录\}\{./path/to/payment.png\}}}
+{\invoiceplaceholder{如已有完整发票，可改为 \texttt{\string\invoiceimage\{page=1\}\{./assets/example\_invoice.pdf\}}。}}
+{订单号：示例订单号；发票号：如已开票再填写。}
+
+\clearpage
+{\Large \textbf{TODO}}\\[0.8em]
+
+\textbf{缺订单截图}
+\begin{itemize}
+  \item 示例：某物品订单截图缺失，暂未入页。
+\end{itemize}
+
+\textbf{缺付款截图}
+\begin{itemize}
+  \item 示例：某物品只有订单列表页，缺付款详情页。
+\end{itemize}
+
+\textbf{缺发票}
+\begin{itemize}
+  \item 示例：某物品当前未见完整发票。
+\end{itemize}
+
+\textbf{已有材料但未匹配}
+\begin{itemize}
+  \item 示例：某发票金额与订单金额不一致，暂不入正文。
+\end{itemize}
+
+\end{document}

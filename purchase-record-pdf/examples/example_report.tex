@@ -1,0 +1,100 @@
+\documentclass[11pt,fontset=fandol]{ctexart}
+
+\usepackage[a4paper,margin=1.15cm]{geometry}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{xcolor}
+
+\setlength{\parindent}{0pt}
+\renewcommand{\arraystretch}{1.18}
+\pagestyle{empty}
+
+\newcommand{\docTitle}{购买记录 PDF 示例}
+\newcommand{\docDate}{2026年05月20日}
+
+\newcommand{\typeRow}[4]{#1 & #2 & #3 & #4 \\}
+\newcommand{\subtotalRow}[2]{\multicolumn{2}{l}{#1小计} & #2 & \\}
+
+\newcommand{\topimage}[2]{
+  \begin{minipage}[t][8.1cm][t]{0.485\linewidth}
+    \centering
+    \textbf{#1}\\[0.3em]
+    \includegraphics[width=\linewidth,height=7.5cm,keepaspectratio]{#2}
+  \end{minipage}
+}
+
+\newcommand{\invoiceimage}[2]{
+  \begin{minipage}[t][14.6cm][t]{\linewidth}
+    \centering
+    \textbf{发票}\\[0.3em]
+    \includegraphics[width=\linewidth,height=13.8cm,keepaspectratio,#1]{#2}
+  \end{minipage}
+}
+
+\newcommand{\recordpage}[7]{
+\clearpage
+{\Large \textbf{#1}}\\[0.3em]
+类型：#2 \qquad 金额：#3\\[0.7em]
+\noindent
+\topimage{购买记录}{#4}\hfill
+\topimage{付款记录}{#5}
+
+\vspace{0.7em}
+
+\noindent
+#6
+
+\vfill
+\textcolor{gray}{#7}
+}
+
+\begin{document}
+
+\begin{center}
+  {\zihao{2}\bfseries \docTitle}\\[0.35em]
+  {\large \docDate}
+\end{center}
+
+\vspace{0.25em}
+
+{\small
+\begin{center}
+\begin{tabularx}{0.99\linewidth}{@{}>{\raggedright\arraybackslash}p{1.8cm} X >{\centering\arraybackslash}p{2.1cm} >{\centering\arraybackslash}p{1.8cm}@{}}
+\toprule
+类型 & 物品名 & 价格 & 备注 \\
+\midrule
+\typeRow{道具}{得力文件夹}{234.36}{示例脱敏图}
+\subtotalRow{道具}{234.36}
+\midrule
+\multicolumn{2}{l}{总计} & 234.36 & \\
+\bottomrule
+\end{tabularx}
+\end{center}
+}
+
+\vspace{0.5em}
+
+\textbf{说明：}本页展示内置构图。上方左侧为购买记录，右侧为付款记录，下方为发票。示例图片均已脱敏，金额保留用于演示核对逻辑。
+
+\recordpage
+{1. 得力文件夹}
+{道具}
+{¥234.36}
+{../assets/examples/example_order_redacted.png}
+{../assets/examples/example_payment_redacted.png}
+{\invoiceimage{}{../assets/examples/example_invoice_redacted.png}}
+{示例备注：订单金额、付款金额与发票价税合计一致，适合作为 skill README 中的演示样例。}
+
+\clearpage
+{\Large \textbf{TODO}}\\[0.8em]
+
+\textbf{这个示例还可以继续补充}
+\begin{itemize}
+  \item 增加多类型条目，演示首页小计与总计的完整写法。
+  \item 增加“缺发票”与“已有但未匹配”的占位示例。
+  \item 如果改用 PDF 发票原件，可把发票页替换成 PDF 截图或分页插图。
+\end{itemize}
+
+\end{document}
